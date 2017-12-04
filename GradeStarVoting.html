@@ -1,1 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>等级星投票</title>
+    <style type="text/css">
+        #vote div {
+            position: relative;
+            float: left;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2>等级星投票效果---鼠标移上去， 选取星级</h2>
+    <div id="voteed">选取:</div>
+    <div id="vote">
+        <div>☆</div>
+        <div>☆</div>
+        <div>☆</div>
+        <div>☆</div>
+        <div>☆</div>
+    </div>
+    <script type="text/javascript">
+         window.onload = function() {
+            function getTypeElement( elems, type ) {
+                var len = elems.length, arr = [];
+                for(var i = 0; i < len; i++ ) {
+                    var item = elems[i];
+                    if(item.nodeName.replace("#", "").toLocaleLowerCase() == type) {
+                        arr.push( elems[i] )
+                    }
+                }
+                return arr;
+            }
+            function vote( e ) {
+                var votes = getTypeElement(e.children, 'div'),
+                    voteed = document.getElementById("voteed");
+                for(var i = 0; i < 5; i++ ) {
+                    var m = votes[i];
+                    m.setAttribute('data-num', i);
+                    m.innerHTML = "☆";
+                    m.onmouseover = function() {
+                        var n = parseInt(this.getAttribute("data-num"), 10) + 1;
+                        voteed.innerHTML = "选取"+ n +"星级"
+                        for(var k = 0; k < 5; k++ ) {
+                            var v = votes[k];
+                            v.innerHTML = parseInt(v.getAttribute("data-num"), 10) >= n ? "☆":"★";
+                        }
+                    }
+                }
 
+            }
+            vote(document.getElementById('vote'))
+         }
+    </script>
+</body>
+</html>
